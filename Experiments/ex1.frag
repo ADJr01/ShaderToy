@@ -9,7 +9,7 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord )
     // Normalized pixel coordinates (from 0 to 1)
     vec2 uv = (fragCoord/iResolution.xy) * 2.0 - 1.0; // normalizing uv coordinates
     uv.x*=iResolution.x/iResolution.y;
-    float dense = 8.0;
+    float dense = 5.0; // intensity of wave 
     float  y= abs((length(uv)+iTime)*PI)*dense;
     y = sin(y)*0.02;
     y+=floor(y)+1.0;
