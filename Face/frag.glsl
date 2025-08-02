@@ -21,7 +21,7 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord )
     float mouthSub = createCircle(uv-vec2(-0.001,-0.15),0.2);
     mouth-=mouthSub;
     mask-=mouth;
-    vec3 color = mask*vec3(1.0, 1.0, 0.0);
+    vec3 color = mask*vec3(1., 1., 0.0);
 
     // Output to screen
     fragColor = vec4(color,1.0);
