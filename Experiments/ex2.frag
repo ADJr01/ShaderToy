@@ -1,5 +1,4 @@
- #define PI 3.1415926535
-
+#define PI 3.1415926535
 
 float createLine(float axis,float start,float thickNess){ 
     float line =0.0;
@@ -52,4 +51,3 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord )
     // Output to screen
     fragColor = vec4(color,1.0);
 }
-
