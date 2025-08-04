@@ -1,22 +1,4 @@
-#define PI 3.1415926535
-
-
-float plot(vec2 uv,float pct){
-    float a = smoothstep(pct+0.01,pct,uv.x);
-    float b = smoothstep(pct,pct-0.01,uv.x);
-    return a-b;
-}
-
-float creatHorizontalLine(vec2 uv){
-    float line = 0.0;
-    if(uv.y>0.2 && uv.y<0.25) {
-        line=1.0;
-    } else {
-        line = 0.0;
-    }
-    return line;
-}
-
+ #define PI 3.1415926535
 
 
 float createLine(float axis,float start,float thickNess){ 
@@ -70,3 +52,4 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord )
     // Output to screen
     fragColor = vec4(color,1.0);
 }
+
