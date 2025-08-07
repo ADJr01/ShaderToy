@@ -1,21 +1,30 @@
 #define PI 3.1415926535
 
 
-
-
-
 void mainImage( out vec4 fragColor, in vec2 fragCoord )
 {
     // Normalized pixel coordinates (from 0 to 1)
     // Normalized pixel coordinates (from 0 to 1)
      vec2 R = iResolution.xy;
     vec2 uv = (2. * fragCoord - R) / R.y;  // normalizing uv coordinates
-    uv*=PI/sin(iTime);
+    uv*=(PI/sin(iTime))*cos(length(uv)*1.78);
     float d = length(uv);
-    float c = smoothstep(0.5,1.0,d);
-    vec3 finalColor =  vec3(
-        smoothstep(c-0.09,c+.8,sin(d/PI)),
-        smoothstep(sin(c+0.02),sin(c+0.02),d*PI),
-        smoothstep(cos(c),sin(c*2.),abs(d*iTime)));
+    float c = smoothstep(0.5,.085,d);
+    vec3 ColorR =  vec3(
+        smoothstep(0.0,0.8,cos(d*c))/d,
+        0.,
+        0.0
+        );
+    vec3 ColorG =  vec3(
+        0.0,
+        smoothstep(0.0,0.8,cos(d*c))/d,
+        0.0
+        );
+    vec3 ColorB =  vec3(
+        0.0,
+        0.0,
+        smoothstep(0.0,0.8,cos(d*c))/d
+        );
+    vec3 finalColor = mix(ColorG+ColorR,ColorB+ColorG,sin(iTime * 1.5) * 0.2 + 0.8);
     fragColor =   vec4(finalColor,1.);
 }
