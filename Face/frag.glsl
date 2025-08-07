@@ -1,3 +1,4 @@
+
 float createCircle(vec2 area,float radius){
     float d = length(area);
     float circle = smoothstep(radius+0.02,radius,d);
@@ -5,13 +6,7 @@ float createCircle(vec2 area,float radius){
 
 }
 
-
-
-void mainImage( out vec4 fragColor, in vec2 fragCoord )
-{
-    // Normalized pixel coordinates (from 0 to 1)
-    vec2 uv = (fragCoord/iResolution.xy) * 2.0 - 1.0;//center to 0.5 and all corners to 0.1;
-    uv.x*=iResolution.x /iResolution.y; // To maintain aspect ratio
+float smilyFace(vec2 uv){
     float mask = createCircle(uv,0.5);
     mask-= createCircle(uv-vec2(-0.2,0.13),0.08); //eye 1
     mask-= createCircle(uv-vec2(0.2,0.13),0.08); //eye 2
@@ -21,6 +16,16 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord )
     float mouthSub = createCircle(uv-vec2(-0.001,-0.15),0.2);
     mouth-=mouthSub;
     mask-=mouth;
+    return mask;
+}
+
+void mainImage( out vec4 fragColor, in vec2 fragCoord )
+{
+    // Normalized pixel coordinates (from 0 to 1)
+     vec2 R = iResolution.xy;
+    vec2 uv = (2. * fragCoord - R) / R.y;  // normalizing uv coordinates
+    uv.x*=iResolution.x /iResolution.y; // To maintain aspect ratio
+    float mask = smilyFace(uv);
     vec3 color = mask*vec3(1., 1., 0.0);
 
     // Output to screen
