@@ -2,18 +2,20 @@
 
 
 
-float plot(vec2 uv){
-    return smoothstep(0.02,0.0,abs(uv.x-uv.y));
-}
+
 
 void mainImage( out vec4 fragColor, in vec2 fragCoord )
 {
     // Normalized pixel coordinates (from 0 to 1)
-    vec2 R = iResolution.xy;
+    // Normalized pixel coordinates (from 0 to 1)
+     vec2 R = iResolution.xy;
     vec2 uv = (2. * fragCoord - R) / R.y;  // normalizing uv coordinates
-    float y = uv.x;
-    float line = plot(uv);
-    vec3  color = vec3(y);
-    color = (1.0 - line)*color+line*vec3(0.,0.,1.);
-    fragColor =   vec4(color,1.);
+    uv*=PI/sin(iTime);
+    float d = length(uv);
+    float c = smoothstep(0.5,1.0,d);
+    vec3 finalColor =  vec3(
+        smoothstep(c-0.09,c+.8,sin(d/PI)),
+        smoothstep(sin(c+0.02),sin(c+0.02),d*PI),
+        smoothstep(cos(c),sin(c*2.),abs(d*iTime)));
+    fragColor =   vec4(finalColor,1.);
 }
