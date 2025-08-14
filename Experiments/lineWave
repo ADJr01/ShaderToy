@@ -1,0 +1,19 @@
+#define PI 3.1415926535
+float plot(vec2 uv,float axis){
+    float thickness = 0.0314;
+    float a = smoothstep(axis-thickness,axis,uv.y);
+    float b = smoothstep(axis,axis+thickness,uv.y);
+    return  abs(a-b) ;
+}
+
+void mainImage( out vec4 fragColor, in vec2 fragCoord )
+{
+    // Normalized pixel coordinates (from 0 to 1)
+    vec2 uv = (2.*fragCoord - iResolution.xy) / iResolution.y; 
+    //pow(sin(PI*x/2.0),2.0)
+    float y= sin(iTime+0.5)*pow(sin(uv.x*PI/2.0),2.) * cos(iTime+0.5);
+    float mask=plot(uv,y);
+
+    // Output to screen
+    fragColor=mask*vec4(1.);
+}
